@@ -20,8 +20,15 @@ try{
         DB_PASS,
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXEPTION]
     };
-    echo ("Connection Successfull");
-    logActivity($pdo,$user_id,$user_email,'connect_db_success','success');
+    
+    $success = logActivity($pdo,$usr_id,$user_email,'db_connect','success');
+
+    if($success){
+        echo "Activity log inserted successfully";
+    }else {
+        echo "Failed to insert activity log";
+    }
+
 
 }catch(PDOExeption $e){
     die("Connection Failed: " . $e->getMessage());
