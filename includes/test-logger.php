@@ -13,3 +13,6 @@ if($success){
     echo "Failed to insert activity log"
 }
 ?>
+
+//on config
+//require_once(_DIR_ . '/..includes/ativity-logger.php');
