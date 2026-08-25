@@ -1,35 +1,40 @@
 <?php
-session_start();
-require_once(_DIR_ . '/../includes/activity-logger.php');
 
-define('BASE_URL', 'https://localhost/it34a');
+// Start session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
+// Application URL
+define('BASE_URL', 'http://localhost/it34_lab_db');
+
+// Database configuration
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'it34a_lab_db');
+define('DB_NAME', 'it34_lab_db');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 
-$user_id = "root" ?? null;
-$user_email = "root" ?? null;
-
 try {
-
     $pdo = new PDO(
-        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME,
+        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
         DB_USER,
         DB_PASS,
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES => false
+        ]
     );
-    
-    $success = logActivity($pdo, $user_id, $user_email, 'db_connect', 'success');
 
-    if ($success) {
-        echo "Activity log inserted successfully";
-    } else {
-        echo "Failed to insert activity log";
-    }
-
-} catch(PDOException $e) {
-    die("Connection Failed: " . $e->getMessage());
+} catch (PDOException $e) {
+    die("Database connection failed: " . $e->getMessage());
 }
+
+// Load activity logger only if the file exists
+$logger = __DIR__ . '/../includes/activity-logger.php';
+
+if (file_exists($logger)) {
+    require_once $logger;
+}
+
 ?>
