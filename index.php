@@ -51,9 +51,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $user_id,
             $user_email,
             $action,
-            $status,
+            $status
         );
-
 
         if($success){
             echo"<p> Activity: ". htmlspecialchars($action) . 
