@@ -9,7 +9,7 @@ if(isset($_SESSION['user_id'])){
 
 $error = '';
 
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
+if($_SESSION['REQUEST_METHOD'] == 'POST'){
     $login = trim($_POST['login'] ?? '');
     $password = $_POST['password'] ?? '';
 
@@ -20,7 +20,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     $error = 'Invalid login credentials';
 }
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,3 +50,5 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         <button type="submit">Sign In</button>
 </body>
 </html>
+
+?>
