@@ -27,12 +27,12 @@
                 <tr>
                     <td>
                         <?= htmlspecialchars(
-                            $activity['activity_log_status_id']
+                            $activity['activity_log_id']
                         ) ?>
                     </td>
                     <td>
                         <?= htmlspecialchars(
-                            $activity['user_username']
+                            $activity['user_id']
                         ) ?>
                     </td>
                     <td>
