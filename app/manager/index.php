@@ -1,26 +1,3 @@
-<?php
-require 'config/config.php';
-require 'config/function.php';
-
-if(isset($_SESSION['user_id'])){
-    header('Location: '.BASE_URL . '/app/' . $_SESSION['user_role']. '/index.php');
-    exit;
-}
-
-$error = '';
-
-if($_SESSION['REQUEST_METHOD'] == 'POST'){
-    $login = trim($_POST['login'] ?? '');
-    $password = $_POST['password'] ?? '';
-
-    if(loginUser($pdo,$login,$password)){
-        header('Location: '. BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
-        exit;
-    }
-
-    $error = 'Invalid login credentials';
-}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,26 +6,7 @@ if($_SESSION['REQUEST_METHOD'] == 'POST'){
     <title>Document</title>
 </head>
 <body>
-    <?php if ($error): ?>
-        <p><?= htmlspecialchars($error) ?></p>
-    <?php endif; ?>
-
-    <h1>User Login</h1>
-    <form method="POST">
-        <label> Username or email</label>
-        <input type="text"
-               name="login"
-               required
-        >       
-        <br>
-        <label>Password</label>
-        <input type="password"
-               name="password"
-               required
-        >
-        <br>
-        <button type="submit">Sign In</button>
+    <h1>Hello Manager</h1>
+    <a href="../auth/signout.php">Sign Out</a>
 </body>
 </html>
-
-?>
