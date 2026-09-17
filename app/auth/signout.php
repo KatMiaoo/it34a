@@ -1,18 +1,17 @@
 <?php
+require_once __DIR__ . '/../../config/config.php';
 
-session_start();
-if (isset($_SESSION['user_id'])){
+if (isset($_SESSION['user_id'])) {
     logActivity(
         $pdo,
         $_SESSION['user_id'],
         $_SESSION['user_username'],
-        'logout'
+        'logout',
         'success'
     );
 }
 $_SESSION = [];
 session_destroy();
 
-header('Location: ../test/index.php');
+header('Location: ../../test/index.php');
 exit;
-?>

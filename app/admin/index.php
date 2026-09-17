@@ -1,3 +1,28 @@
+<?php
+// Step out of admin/ and app/ to reach config/
+require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../../config/function.php';
+
+requireRole('admin');
+
+logActivity(
+    $pdo,
+    $_SESSION['user_id'],
+    $_SESSION['user_username'],
+    'login',
+    'success'
+);
+
+#Query #3 Get All Activity Logs
+$stmt = $pdo->query("
+    SELECT * 
+    FROM activity_logs
+    ORDER BY activity_log_created_at DESC
+");
+
+$activityLogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,61 +38,46 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Username</th>
+                <th>User ID</th>
                 <th>Email</th>
                 <th>Action</th>
                 <th>Status</th>
-                <th>Ip Address</th>
+                <th>IP Address</th>
                 <th>User Agent</th>
                 <th>Timestamp</th>
             </tr>
         </thead>
-        <tbody>
-            <? foreach($activities as $activity): ?>
+        <tbody>        
+            <?php foreach ($activityLogs as $activity): ?>
+
                 <tr>
-                    <td>
-                        <?= htmlspecialchars(
-                            $activity['activity_log_id']
-                        ) ?>
+                    <td><?= htmlspecialchars(
+                        $activity['activity_log_id']) ?>
                     </td>
-                    <td>
-                        <?= htmlspecialchars(
-                            $activity['user_id']
-                        ) ?>
+                    <td><?= htmlspecialchars(
+                        $activity['user_id']) ?>
                     </td>
-                    <td>
-                        <?= htmlspecialchars(
-                            $activity['user_email']
-                        ) ?>
+                    <td><?= htmlspecialchars(
+                        $activity['user_email']) ?>
                     </td>
-                    <td>
-                        <?= htmlspecialchars(
-                            $activity['activity_log_action']
-                        ) ?>
+                    <td><?= htmlspecialchars(
+                        $activity['activity_log_action']) ?>
                     </td>
-                    <td>
-                        <?= htmlspecialchars(
-                            $activity['activity_log_status']
-                        ) ?>
+                    <td><?= htmlspecialchars(
+                        $activity['activity_log_status']) ?>
                     </td>
-                    <td>
-                        <?= htmlspecialchars(
-                            $activity['activity_log_ip_address']
-                        ) ?>
+                    <td><?= htmlspecialchars(
+                        $activity['activity_log_ip_address']) ?>
                     </td>
-                    <td>
-                        <?= htmlspecialchars(
-                            $activity['activity_log_user_agent']
-                        ) ?>
+                    <td><?= htmlspecialchars(
+                        $activity['activity_log_user_agent']) ?>
                     </td>
-                    <td>
-                        <?= htmlspecialchars(
-                            $activity['activity_log_created_at']
-                        ) ?>
+                    <td><?= htmlspecialchars(
+                        $activity['activity_log_created_at']) ?>
                     </td>
                 </tr>
-            <? endforeach; ?>
+            <?php endforeach; ?>
         </tbody>
-    </table>
+
 </body>
 </html>
