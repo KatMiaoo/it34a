@@ -1,6 +1,5 @@
 <?php
 require __DIR__ . '/../config/config.php'; 
-require __DIR__ . '/../config/function.php';
 
 // Ensure session_start(); is called (here or in config.php)
 
