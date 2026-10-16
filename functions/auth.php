@@ -1,9 +1,6 @@
 <?php
 
-function redirect($path){
-    header("Location: " . BASE_URL . $path);
-    exit;
-}
+require_once __DIR__ . '/sessions.php';
 
 function loginUser($pdo, $login, $password) {
     // Application query #2
@@ -34,11 +31,25 @@ function loginUser($pdo, $login, $password) {
         return false;
     }
 
+    // Check if user already has an active session
+    function hasActiveUserSession(): bool
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    return isset($_SESSION['user_id']);
+}
+
     // SESSION Variables
     $_SESSION['user_id'] = $user['user_id'];
     $_SESSION['user_email'] = $user['user_email'];
     $_SESSION['user_username'] = $user['user_username'];
     $_SESSION['user_role'] = $user['user_role'];
+
+    //Initialize session in database
+       //Initialize session in database
+    $_SESSION['session_id'] = startUserSession($pdo);
 
     return true;
 }
@@ -58,4 +69,5 @@ function requireRole($role){
         die('Access Denied');
     }
 }
+
 ?>
