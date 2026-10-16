@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../config/config.php'; 
+require 'config/config.php'; 
 
 // Ensure session_start(); is called (here or in config.php)
 
@@ -25,32 +25,33 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         );
 
     } else {
-        if(loginUser($pdo, $login, $password)){
-        
-            logActivity(
-                $pdo, 
-                $_SESSION['user_id'], 
-                $_SESSION['user_username'], 
-                'login', 
-                'success'
-            );
 
-            header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
-            exit;
-        }
-    }
+        $result = loginUser($pdo,$login,$password);
 
-    if (loginUser($pdo, $login, $password)){
+        if($result===true){
+
+        logActivity(
+            $pdo,
+            $_SESSION['user_id'],
+            $_SESSION['user_email'],
+            'login',
+            'success'
+        );
+
         header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
         exit;
+
+        } elseif ($result==='active_session'){
+            $error = 'This account is already logged in from another device.';
+        } else {
+            $error = 'Invalid login credentials';
+        }
+        
+
     }
- 
-    $error = 'Invalid login credentials';
-
-    
 }
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
