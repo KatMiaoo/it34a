@@ -11,6 +11,8 @@ if(isset($_SESSION['user_id'])){
 $error = '';
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+    requireCsrfToken();
     $login = trim($_POST['login'] ?? '');
     $password = $_POST['password'] ?? '';
     
@@ -57,7 +59,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>User Login</title>
     </head>
 
     <body>
@@ -66,7 +68,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             <?php endif; ?>
                 
         <h1>User Login</h1>
+
             <form method="POST">
+                <input type = "hidden" name="csrf_token" value="<?= htmlspecialchars(generateCSRFToken()) ?>">
             <label>User or email</label>
             <input type="text"
                     name="login"
