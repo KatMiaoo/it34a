@@ -25,12 +25,13 @@ function verifyCsrfToken($token) {
 }
 
 function requireCsrfToken(){
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if($_SERVER['REQUEST_METHOD']  !== 'POST') {
         return;
     }
 
     $token = $_POST['csrf_token'] ?? '';
-    if(!verifyCsrfToken($token)) {
+
+    if (!verifyCsrfToken($token)) {
         http_response_code(403);
         die('Invalid CSRF token');
     }
