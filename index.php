@@ -20,7 +20,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if ($login==='' || $password==='') {
         $error = 'Invalid login credentials';
         logActivity(
-            $pdo, 
+            $pdo,
             $login, 
             'login',
             'failed',
@@ -70,7 +70,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <h1>User Login</h1>
 
             <form method="POST">
-                <input type = "hidden" name="csrf_token" value="<?= htmlspecialchars(generateCSRFToken()) ?>">
+            <input type = "hidden" name="csrf_token" value="<?= htmlspecialchars(generateCSRFToken()) ?>">
             <label>User or email</label>
             <input type="text"
                     name="login"
