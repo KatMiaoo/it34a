@@ -62,10 +62,10 @@ $activityLogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin Dashboard</title>
 </head>
 <body>
-    <h1>Hello Admin</h1>
+    <h1>Welcome Admin! (˶˃ ᵕ ˂˶)</h1>
     <a href="../auth/signout.php">Sign Out</a>
 
     <?php if ($section === 'activity-logs'): ?>

@@ -7,12 +7,16 @@ require_once(__DIR__ . '/../functions/redirect.php');
 require_once(__DIR__ . '/../functions/sessions.php');
 require_once(__DIR__ . '/../functions/csrf.php');
 
-define('BASE_URL', 'http://localhost/it34_lab_db');
+require_once(__DIR__ . '/../vendor/autoload.php');
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv -> load();
 
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'it34_lab_db');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_HOST',$_ENV['DB_HOST'] ?? '');
+define('DB_NAME',$_ENV['DB_NAME'] ?? '');
+define('DB_USER',$_ENV['DB_USER'] ?? '');
+define('DB_PASS',$_ENV['DB_PASS'] ?? '');
+
+define('BASE_URL', 'http://localhost/it34_lab_db');
 
 $user_id = "root" ?? null;
 $user_email = "root" ?? null;
